@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeriMalkin.com</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #ffb3c6, #c40032);
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+.finalMessage {
+    text-align: center;
+    color: white;
+    font-size: 1.3rem;
+    margin: 40px 0 20px 0;
+    font-family: 'Pacifico', cursive;
+    opacity: 0.9;
+}
+
+    
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Pacifico', cursive;
+    color: #fff;
+    font-size: 2.5rem;
+}
+#score {
+    text-align: center;
+    color: #fff;
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+.scrapbook {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 10px;
+}
+.photoCard {
+    width: 120px;
+    border-radius: 12px;
+    background: #fff;
+    padding: 6px;
+    box-shadow: 0 4px 15px rgba(196,0,50,0.25);
+}
+.photoCard img {
+    width: 100%;
+    border-radius: 8px;
+}
+.tape {
+    width: 40px;
+    height: 15px;
+    background: #ffd1dc;
+    margin: -10px auto 5px auto;
+    transform: rotate(5deg);
+    opacity: 0.9;
+}
+.heart {
+    position: absolute;
+    font-size: 40px;
+    cursor: pointer;
+    animation: floatUp 6s linear forwards;
+}
+@keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-100vh); opacity: 0; }
+}
+#messageBox {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 15px 25px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    color: #c40032;
+    box-shadow: 0 4px 20px rgba(196, 0, 50, 0.25);
+    display: none;
+}
+.musicBox {
+    text-align: center;
+    margin-top: 20px;
+    color: #c40032;
+    font-weight: 600;
+}
+audio { margin-top: 10px; }
+.visualizer { display: flex; justify-content: center; align-items: flex-end; gap: 5px; height: 50px; margin-top: 5px; }
+.visualizer div { width: 6px; background: #ff4d6d; height: 10px; animation: bounce 0.5s infinite ease-in-out; }
+@keyframes bounce { 0%,100% { transform: scaleY(0.2); } 50% { transform: scaleY(1); } }
+</style>
+</head>
+
+<body>
+
+<h1>Yelo Madam ji</h1>
+<div id="score">Score: 0</div>
+
+<div class="musicBox">
+    <audio id="bgMusic" controls autoplay loop>
+        <source src="music/sufr ft Arpit Bala, toorjo dey - bargad (official lyric video).mp3" type="audio/mp3">
+    </audio>
+    <div class="visualizer" id="visualizer"></div>
+</div>
+
+<div class="scrapbook">
+    <div class="photoCard"><div class="tape"></div><img src="photos/cute1.png"></div>
+    <div class="photoCard"><div class="tape"></div><img src="photos/cute2.png"></div>
+    <div class="photoCard"><div class="tape"></div><img src="photos/cute3.png"></div>
+</div>
+
+<div id="messageBox"></div>
+
+<script>
+// Messages & emojis
+const messages = ["Ma'am","Malkin🧎‍♂️","Chatpati Lesbian😝"];
+const emojis = ["🧸","🌸","🐼","🍓","🍒","🩷","✨","💌","🐡"];
+
+// Score
+let score = 0;
+const scoreEl = document.getElementById("score");
+
+// Spawn hearts / emojis
+function spawnHeart() {
+    let heart = document.createElement("div");
+    heart.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+    heart.classList.add("heart");
+    heart.style.left = Math.random() * (window.innerWidth - 50) + "px";
+    heart.style.top = window.innerHeight + "px";
+
+    heart.onclick = () => {
+        score++;
+        scoreEl.textContent = "Score: " + score;
+        let msgBox = document.getElementById("messageBox");
+        msgBox.innerHTML = messages[Math.floor(Math.random()*messages.length)];
+        msgBox.style.display = "block";
+        setTimeout(()=>msgBox.style.display="none",1500);
+        heart.remove();
+    }
+
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+setInterval(spawnHeart, 700);
+
+// Music visualizer
+const audio = document.getElementById("bgMusic");
+const visualizer = document.getElementById("visualizer");
+const numBars = 20;
+for(let i=0;i<numBars;i++){ const bar=document.createElement("div"); visualizer.appendChild(bar); }
+const bars=visualizer.querySelectorAll("div");
+
+audio.addEventListener("play",()=>{
+    const context = new AudioContext();
+    const src = context.createMediaElementSource(audio);
+    const analyser = context.createAnalyser();
+    src.connect(analyser);
+    analyser.connect(context.destination);
+    analyser.fftSize = 64;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    function animate(){
+        requestAnimationFrame(animate);
+        analyser.getByteFrequencyData(dataArray);
+        for(let i=0;i<bars.length;i++){
+            const scale = (dataArray[i%bufferLength]/255)*2;
+            bars[i].style.transform = `scaleY(${scale})`;
+        }
+    }
+    animate();
+});
+
+// Mobile auto-play fix
+function enableAudio(){ audio.play(); document.removeEventListener("click",enableAudio); document.removeEventListener("touchstart",enableAudio);}
+document.addEventListener("click",enableAudio);
+document.addEventListener("touchstart",enableAudio);
+
+</script>
+    <div class="finalMessage">
+        I Tried Alright.
+        Pata hai Cringe hai.
+        😭
+</div>
+</body>
+</html>
