@@ -3,76 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MeriMalkin.com</title>
+<title>MeriMalkin.com ❤️</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
 body {
     margin: 0;
     background: linear-gradient(135deg, #ffb3c6, #c40032);
     font-family: 'Poppins', sans-serif;
     overflow-x: hidden;
-}
-
-.finalMessage {
     text-align: center;
-    color: white;
-    font-size: 1.3rem;
-    margin: 40px 0 20px 0;
-    font-family: 'Pacifico', cursive;
-    opacity: 0.9;
 }
 
-    
 h1 {
-    text-align: center;
     margin-top: 20px;
     font-family: 'Pacifico', cursive;
     color: #fff;
     font-size: 2.5rem;
 }
+
 #score {
-    text-align: center;
     color: #fff;
-    font-size: 1.5rem;
-    margin-top: 10px;
+    font-size: 1.4rem;
+    margin-top: 8px;
 }
+
+/* Scrapbook */
 .scrapbook {
-    margin-top: 20px;
+    margin-top: 25px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 10px;
+    gap: 25px;
 }
+
 .photoCard {
-    width: 120px;
-    border-radius: 12px;
+    width: 180px;                 /* BIGGER PHOTOS */
     background: #fff;
-    padding: 6px;
-    box-shadow: 0 4px 15px rgba(196,0,50,0.25);
+    border-radius: 16px;
+    padding: 8px;
+    box-shadow: 0 6px 20px rgba(196,0,50,0.3);
+    transition: transform 0.3s ease;
 }
+
+.photoCard:hover {
+    transform: scale(1.05) rotate(-1deg);
+}
+
 .photoCard img {
     width: 100%;
-    border-radius: 8px;
+    height: auto;
+    border-radius: 12px;
 }
+
 .tape {
-    width: 40px;
-    height: 15px;
+    width: 45px;
+    height: 16px;
     background: #ffd1dc;
-    margin: -10px auto 5px auto;
+    margin: -12px auto 6px;
     transform: rotate(5deg);
-    opacity: 0.9;
 }
-.heart {
+
+/* Floating Stickers */
+.sticker {
     position: absolute;
-    font-size: 40px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
     animation: floatUp 6s linear forwards;
 }
+
 @keyframes floatUp {
     from { transform: translateY(0); opacity: 1; }
     to { transform: translateY(-100vh); opacity: 0; }
 }
+
+/* Message Popup */
 #messageBox {
     position: fixed;
     bottom: 20px;
@@ -83,25 +90,61 @@ h1 {
     border-radius: 20px;
     font-size: 1.1rem;
     color: #c40032;
-    box-shadow: 0 4px 20px rgba(196, 0, 50, 0.25);
     display: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
+
+/* Music */
 .musicBox {
-    text-align: center;
     margin-top: 20px;
-    color: #c40032;
-    font-weight: 600;
 }
-audio { margin-top: 10px; }
-.visualizer { display: flex; justify-content: center; align-items: flex-end; gap: 5px; height: 50px; margin-top: 5px; }
-.visualizer div { width: 6px; background: #ff4d6d; height: 10px; animation: bounce 0.5s infinite ease-in-out; }
-@keyframes bounce { 0%,100% { transform: scaleY(0.2); } 50% { transform: scaleY(1); } }
+audio {
+    width: 90%;
+}
+
+/* Visualizer */
+.visualizer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 5px;
+    height: 50px;
+    margin-top: 5px;
+}
+.visualizer div {
+    width: 6px;
+    background: #ff4d6d;
+    height: 10px;
+}
+
+/* Ending message */
+.finalMessage {
+    margin: 50px 20px 30px;
+    font-family: 'Pacifico', cursive;
+    font-size: 1.4rem;
+    color: #fff;
+    min-height: 120px;
+    animation: glow 3s infinite;
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 5px rgba(255,255,255,0.4); }
+  50% { text-shadow: 0 0 20px rgba(255,182,193,0.9); }
+  100% { text-shadow: 0 0 5px rgba(255,255,255,0.4); }
+}
+
+/* MOBILE FIX */
+@media (max-width: 480px) {
+    .photoCard {
+        width: 150px;
+    }
+}
 </style>
 </head>
 
 <body>
 
-<h1>Yelo Madam ji</h1>
+<h1>Is this Third Base??? 💖</h1>
 <div id="score">Score: 0</div>
 
 <div class="musicBox">
@@ -118,77 +161,130 @@ audio { margin-top: 10px; }
 </div>
 
 <div id="messageBox"></div>
+<div class="finalMessage" id="finalMessage"></div>
 
 <script>
-// Messages & emojis
-const messages = ["Ma'am","Malkin🧎‍♂️","Chatpati Lesbian😝"];
-const emojis = ["🧸","🌸","🐼","🍓","🍒","🩷","✨","💌","🐡"];
+// Messages
+const messages = [
+  "Mein sabun hu😝",
+  "Cute",
+  "Uhhhhh....",
+  "Hmmmmmmmm",
+  "Kesa hai game?"
 
-// Score
+];
+
+// Stickers
+const stickers = [
+  "stickers/bananacat.gif",
+  "stickers/cat-freaky.gif",
+  "stickers/do-dodo.gif",
+  "stickers/suscat.gif",
+  "stickers/sukuna.gif",
+  "stickers/pray.gif",
+  "stickers/hampterlove.gif"
+];
+
 let score = 0;
 const scoreEl = document.getElementById("score");
 
-// Spawn hearts / emojis
-function spawnHeart() {
-    let heart = document.createElement("div");
-    heart.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
-    heart.classList.add("heart");
-    heart.style.left = Math.random() * (window.innerWidth - 50) + "px";
-    heart.style.top = window.innerHeight + "px";
+// Spawn stickers
+function spawnSticker() {
+    let img = document.createElement("img");
+    img.src = stickers[Math.floor(Math.random() * stickers.length)];
+    img.className = "sticker";
+    img.style.left = Math.random() * (window.innerWidth - 60) + "px";
+    img.style.top = window.innerHeight + "px";
 
-    heart.onclick = () => {
+    img.onclick = () => {
         score++;
         scoreEl.textContent = "Score: " + score;
-        let msgBox = document.getElementById("messageBox");
-        msgBox.innerHTML = messages[Math.floor(Math.random()*messages.length)];
-        msgBox.style.display = "block";
-        setTimeout(()=>msgBox.style.display="none",1500);
-        heart.remove();
-    }
 
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),6000);
+        const box = document.getElementById("messageBox");
+        box.textContent = messages[Math.floor(Math.random()*messages.length)];
+        box.style.display = "block";
+        setTimeout(()=>box.style.display="none",1500);
+
+        if(score === 10){
+            document.getElementById("finalMessage").innerHTML =
+              "Kaam hai ki nahi, madam?";
+        }
+        if(score === 15){
+            document.getElementById("finalMessage").innerHTML =
+              "Stop";
+        }
+        if(score === 20){
+            document.getElementById("finalMessage").innerHTML =
+              "Seriously Stop";
+        }
+        if(score === 21){
+            document.getElementById("finalMessage").innerHTML =
+              "Thike khel lo, wese bhi ghost karne wale ho😔😔";
+        }
+
+        img.remove();
+    };
+
+    document.body.appendChild(img);
+    setTimeout(()=>img.remove(),6000);
 }
-setInterval(spawnHeart, 700);
+
+setInterval(spawnSticker, 700);
 
 // Music visualizer
 const audio = document.getElementById("bgMusic");
 const visualizer = document.getElementById("visualizer");
-const numBars = 20;
-for(let i=0;i<numBars;i++){ const bar=document.createElement("div"); visualizer.appendChild(bar); }
-const bars=visualizer.querySelectorAll("div");
+for(let i=0;i<20;i++){
+    const bar = document.createElement("div");
+    visualizer.appendChild(bar);
+}
 
-audio.addEventListener("play",()=>{
-    const context = new AudioContext();
-    const src = context.createMediaElementSource(audio);
-    const analyser = context.createAnalyser();
+audio.addEventListener("play", ()=>{
+    const ctx = new AudioContext();
+    const src = ctx.createMediaElementSource(audio);
+    const analyser = ctx.createAnalyser();
     src.connect(analyser);
-    analyser.connect(context.destination);
+    analyser.connect(ctx.destination);
     analyser.fftSize = 64;
-    const bufferLength = analyser.frequencyBinCount;
-    const dataArray = new Uint8Array(bufferLength);
+
+    const data = new Uint8Array(analyser.frequencyBinCount);
+    const bars = visualizer.children;
 
     function animate(){
         requestAnimationFrame(animate);
-        analyser.getByteFrequencyData(dataArray);
+        analyser.getByteFrequencyData(data);
         for(let i=0;i<bars.length;i++){
-            const scale = (dataArray[i%bufferLength]/255)*2;
-            bars[i].style.transform = `scaleY(${scale})`;
+            bars[i].style.height = (data[i%data.length]/3)+"px";
         }
     }
     animate();
 });
 
-// Mobile auto-play fix
-function enableAudio(){ audio.play(); document.removeEventListener("click",enableAudio); document.removeEventListener("touchstart",enableAudio);}
-document.addEventListener("click",enableAudio);
-document.addEventListener("touchstart",enableAudio);
+// Typed ending
+const endingLines = [
+  "I tried, alright.",
+];
 
+let l=0,c=0;
+const fm = document.getElementById("finalMessage");
+
+function typeEnd(){
+  if(l<endingLines.length){
+    if(c<endingLines[l].length){
+      fm.innerHTML += endingLines[l][c++];
+      setTimeout(typeEnd,50);
+    } else {
+      fm.innerHTML += "<br>";
+      l++; c=0;
+      setTimeout(typeEnd,500);
+    }
+  }
+}
+typeEnd();
+
+// Mobile autoplay unlock
+document.addEventListener("click", ()=>audio.play(), { once:true });
 </script>
-    <div class="finalMessage">
-        I Tried Alright.
-        Pata hai Cringe hai.
-        😭
-</div>
+
 </body>
 </html>
