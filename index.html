@@ -112,6 +112,63 @@ section {
   max-width: 350px;
   margin-top: 15px;
   outline: none;
+<<<<<<< HEAD
+=======
+}
+
+/* ================= PUZZLE SECTION ================= */
+
+.puzzleBox h2 {
+  font-family: 'Pacifico', cursive;
+  font-size: 2.3rem;
+  color: #c40032;
+  margin-bottom: 20px;
+}
+
+.puzzleHint {
+  font-size: 1rem;
+  color: #7a1a2c;
+  margin-bottom: 20px;
+}
+
+.puzzleGrid {
+  width: 300px;
+  height: 300px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  margin-bottom: 20px;
+}
+
+.piece {
+  width: 100%;
+  height: 100%;
+  background-image: url("photos/puzzle.jpg");
+  background-size: 300% 300%;
+  border-radius: 8px;
+  cursor: grab;
+}
+
+.puzzleComplete {
+  display: none;
+  font-family: 'Pacifico', cursive;
+  font-size: 1.5rem;
+  color: #c40032;
+  margin-top: 20px;
+>>>>>>> 534b9dc (Puzzle Update)
+}
+
+.continueBtn {
+  margin-top: 20px;
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 30px;
+  background: #ff4d6d;
+  color: white;
+  cursor: pointer;
+  display: none;
 }
 
 /* Final message */
@@ -212,6 +269,7 @@ section {
   #welcome h1 { font-size: 2.5rem; }
   .final { font-size: 1.8rem; }
   .valentineBox h2 { font-size: 2rem; }
+  .puzzleGrid { width: 260px; height: 260px; }
 }
 </style>
 </head>
@@ -280,15 +338,41 @@ section {
   <p>Play it while you scroll.</p>
 
   <div class="musicBox">
+<<<<<<< HEAD
   <p style="font-size:1rem; color:#7a1a2c;">Tap to play the song 🎵</p>
   <audio id="bgMusic" controls loop>
     <source src="music/Taylor Swift - Call It What You Want (Lyric Video).mp3" type="audio/mp3">
   </audio>
 </div>
+=======
+    <p style="font-size:1rem; color:#7a1a2c;">Tap to play the song 🎵</p>
+    <audio id="bgMusic" controls loop>
+      <source src="music/Taylor Swift - Call It What You Want (Lyric Video).mp3" type="audio/mp3">
+    </audio>
+  </div>
+>>>>>>> 534b9dc (Puzzle Update)
+</section>
+
+<!-- 🧩 PUZZLE SECTION -->
+<section class="reveal">
+  <div class="puzzleBox">
+    <h2>Solve this puzzle 💖</h2>
+    <p class="puzzleHint">Complete it to see something special…</p>
+
+    <div class="puzzleGrid" id="puzzleGrid"></div>
+
+    <div class="puzzleComplete" id="puzzleComplete">
+      This is us… and I want this forever 💖
+    </div>
+
+    <button class="continueBtn" id="continueBtn" onclick="document.getElementById('finalSection').scrollIntoView({behavior:'smooth'})">
+      Continue 💌
+    </button>
+  </div>
 </section>
 
 <!-- FINAL MESSAGE -->
-<section class="reveal">
+<section class="reveal" id="finalSection">
   <div class="final">
     Baby…  
     <br><br>
@@ -333,7 +417,67 @@ function revealOnScroll() {
 window.addEventListener("scroll", revealOnScroll);
 revealOnScroll();
 
-// Stickers for celebration (CHANGE THESE NAMES TO YOUR FILES)
+/* ================= PUZZLE LOGIC ================= */
+
+const grid = document.getElementById("puzzleGrid");
+let pieces = [];
+
+// Create 9 pieces
+for (let i = 0; i < 9; i++) {
+  const piece = document.createElement("div");
+  piece.className = "piece";
+  piece.draggable = true;
+
+  const x = i % 3;
+  const y = Math.floor(i / 3);
+
+  piece.style.backgroundPosition = `${x * 50}% ${y * 50}%`;
+  piece.dataset.correct = i;
+
+  pieces.push(piece);
+}
+
+// Shuffle and add to grid
+pieces.sort(() => Math.random() - 0.5);
+pieces.forEach(p => grid.appendChild(p));
+
+let dragged = null;
+
+grid.addEventListener("dragstart", e => {
+  if (e.target.classList.contains("piece")) dragged = e.target;
+});
+
+grid.addEventListener("dragover", e => e.preventDefault());
+
+grid.addEventListener("drop", e => {
+  if (e.target.classList.contains("piece")) {
+    const tempPos = dragged.style.backgroundPosition;
+    dragged.style.backgroundPosition = e.target.style.backgroundPosition;
+    e.target.style.backgroundPosition = tempPos;
+
+    const tempData = dragged.dataset.correct;
+    dragged.dataset.correct = e.target.dataset.correct;
+    e.target.dataset.correct = tempData;
+
+    checkSolved();
+  }
+});
+
+function checkSolved() {
+  const all = document.querySelectorAll(".piece");
+  let correct = true;
+
+  all.forEach((p, i) => {
+    if (parseInt(p.dataset.correct) !== i) correct = false;
+  });
+
+  if (correct) {
+    document.getElementById("puzzleComplete").style.display = "block";
+    document.getElementById("continueBtn").style.display = "inline-block";
+  }
+}
+
+// Stickers for celebration
 const stickerImages = [
   "stickers/bananacat.gif",
   "stickers/cat-freaky.gif",
@@ -347,7 +491,6 @@ function sayYes() {
   const msg = document.getElementById("celebration");
   msg.style.display = "block";
 
-  // Spawn floating stickers
   for (let i = 0; i < 25; i++) {
     const img = document.createElement("img");
     img.className = "sticker";
@@ -355,7 +498,6 @@ function sayYes() {
     img.style.left = Math.random() * 100 + "vw";
     img.style.animationDuration = (4 + Math.random() * 4) + "s";
     document.body.appendChild(img);
-
     setTimeout(() => img.remove(), 6000);
   }
 }
@@ -364,6 +506,7 @@ function sayYes() {
 const bgMusic = document.getElementById("bgMusic");
 
 function prepareAudio() {
+<<<<<<< HEAD
   bgMusic.load(); // force load the file
   bgMusic.play().then(() => {
     bgMusic.pause(); // just unlock
@@ -372,16 +515,27 @@ function prepareAudio() {
     // ignore error, user will press play manually
   });
 
+=======
+  bgMusic.load();
+  bgMusic.play().then(() => {
+    bgMusic.pause();
+  }).catch(() => {});
+>>>>>>> 534b9dc (Puzzle Update)
   document.removeEventListener("click", prepareAudio);
   document.removeEventListener("touchstart", prepareAudio);
 }
 
+<<<<<<< HEAD
 // Unlock audio on first user interaction
 document.addEventListener("click", prepareAudio, { once: true });
 document.addEventListener("touchstart", prepareAudio, { once: true });
 
 
   
+=======
+document.addEventListener("click", prepareAudio, { once:true });
+document.addEventListener("touchstart", prepareAudio, { once:true });
+>>>>>>> 534b9dc (Puzzle Update)
 </script>
 
 </body>
