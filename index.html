@@ -61,19 +61,14 @@ section {
   color: #5a0a1a;
 }
 
-/* Reveal on scroll */
+/* Reveal FIX — visible by default */
 .reveal {
-  opacity: 0;
-  transform: translateY(40px);
+  opacity: 1;
+  transform: translateY(0);
   transition: all 1s ease;
 }
 
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Our Memories Section */
+/* Our Memories */
 .memories {
   width: 100%;
   max-width: 1000px;
@@ -86,7 +81,6 @@ section {
   margin-bottom: 30px;
 }
 
-/* BIGGER Photo Grid */
 .memoryGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -112,12 +106,9 @@ section {
   max-width: 350px;
   margin-top: 15px;
   outline: none;
-<<<<<<< HEAD
-=======
 }
 
-/* ================= PUZZLE SECTION ================= */
-
+/* Puzzle */
 .puzzleBox h2 {
   font-family: 'Pacifico', cursive;
   font-size: 2.3rem;
@@ -156,7 +147,6 @@ section {
   font-size: 1.5rem;
   color: #c40032;
   margin-top: 20px;
->>>>>>> 534b9dc (Puzzle Update)
 }
 
 .continueBtn {
@@ -171,7 +161,7 @@ section {
   display: none;
 }
 
-/* Final message */
+/* Final */
 .final {
   font-family: 'Pacifico', cursive;
   font-size: 2.2rem;
@@ -180,7 +170,7 @@ section {
   line-height: 1.5;
 }
 
-/* Valentine Proposal Section */
+/* Valentine */
 .valentineBox h2 {
   font-family: 'Pacifico', cursive;
   font-size: 2.5rem;
@@ -201,29 +191,17 @@ section {
   border-radius: 30px;
   cursor: pointer;
   font-weight: 600;
-  transition: transform 0.3s ease, background 0.3s ease;
-}
-
-#yesBtn {
   background: #ff4d6d;
   color: white;
 }
 
-.valentineBtns button:hover {
-  transform: scale(1.1);
-  background: #ff6f8e;
-}
-
-/* Line under button */
 .noOptionText {
   margin-top: 20px;
   font-size: 1rem;
   color: #7a1a2c;
-  opacity: 0.9;
   font-style: italic;
 }
 
-/* Celebration */
 .celebration {
   margin-top: 30px;
   font-size: 1.6rem;
@@ -232,7 +210,7 @@ section {
   font-family: 'Pacifico', cursive;
 }
 
-/* Floating Stickers */
+/* Stickers */
 .sticker {
   position: fixed;
   bottom: -100px;
@@ -247,7 +225,6 @@ section {
   to { transform: translateY(-120vh); opacity: 0; }
 }
 
-/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -263,14 +240,6 @@ section {
   50% { text-shadow: 0 0 25px rgba(255,105,135,1); }
   100% { text-shadow: 0 0 5px rgba(255,182,193,0.6); }
 }
-
-/* Mobile tweak */
-@media (max-width: 480px) {
-  #welcome h1 { font-size: 2.5rem; }
-  .final { font-size: 1.8rem; }
-  .valentineBox h2 { font-size: 2rem; }
-  .puzzleGrid { width: 260px; height: 260px; }
-}
 </style>
 </head>
 
@@ -278,7 +247,7 @@ section {
 
 <!-- WELCOME -->
 <section id="welcome">
-  <h1>Hi Baby💖</h1>
+  <h1>Hi Baby 💖</h1>
   <p>This is something I wanted to make… just for us.</p>
   <div class="scrollHint">⬇️ Scroll slowly ⬇️</div>
 </section>
@@ -286,37 +255,23 @@ section {
 <!-- STORY 1 -->
 <section class="reveal">
   <div class="story">
-    <p>
-      Every memory with you  
-      is something I quietly keep with me.
-    </p>
-    <p>
-      The little moments,  
-      the random laughs,  
-      the days that felt simple but special.
-    </p>
+    <p>Every memory with you is something I quietly keep with me.</p>
+    <p>The little moments, the random laughs, the days that felt simple but special.</p>
   </div>
 </section>
 
 <!-- STORY 2 -->
 <section class="reveal">
   <div class="story">
-    <p>
-      I don’t know where life takes us,  
-      but I know one thing for sure…
-    </p>
-    <p>
-      I’m really glad  
-      you’re a part of my story.
-    </p>
+    <p>I don’t know where life takes us, but I know one thing for sure…</p>
+    <p>I’m really glad you’re a part of my story.</p>
   </div>
 </section>
 
-<!-- OUR MEMORIES -->
+<!-- MEMORIES -->
 <section class="reveal">
   <div class="memories">
     <h2>Our Memories 📸</h2>
-
     <div class="memoryGrid">
       <img src="photos/mem1.jpeg">
       <img src="photos/mem2.png">
@@ -335,25 +290,16 @@ section {
 <!-- MUSIC -->
 <section class="reveal">
   <h2>This song reminds me of you 🎵</h2>
-  <p>Play it while you scroll.</p>
+  <p id="audioHint">Tap anywhere once, then press Play 🎶</p>
 
   <div class="musicBox">
-<<<<<<< HEAD
-  <p style="font-size:1rem; color:#7a1a2c;">Tap to play the song 🎵</p>
-  <audio id="bgMusic" controls loop>
-    <source src="music/Taylor Swift - Call It What You Want (Lyric Video).mp3" type="audio/mp3">
-  </audio>
-</div>
-=======
-    <p style="font-size:1rem; color:#7a1a2c;">Tap to play the song 🎵</p>
-    <audio id="bgMusic" controls loop>
-      <source src="music/Taylor Swift - Call It What You Want (Lyric Video).mp3" type="audio/mp3">
+    <audio id="bgMusic" controls loop preload="auto">
+      <source src="music/bargad.mp3" type="audio/mpeg">
     </audio>
   </div>
->>>>>>> 534b9dc (Puzzle Update)
 </section>
 
-<!-- 🧩 PUZZLE SECTION -->
+<!-- PUZZLE -->
 <section class="reveal">
   <div class="puzzleBox">
     <h2>Solve this puzzle 💖</h2>
@@ -371,58 +317,39 @@ section {
   </div>
 </section>
 
-<!-- FINAL MESSAGE -->
+<!-- FINAL -->
 <section class="reveal" id="finalSection">
   <div class="final">
     Baby…  
     <br><br>
-    Thank you  
-    for being a part of my life.
+    Thank you for being a part of my life.  
     <br><br>
     Always yours ❤️
   </div>
 </section>
 
-<!-- VALENTINE PROPOSAL -->
+<!-- VALENTINE -->
 <section class="reveal">
   <div class="valentineBox">
     <h2>Will you be my Valentine once again…? 💌</h2>
 
     <div class="valentineBtns">
-      <button id="yesBtn" onclick="sayYes()">Yes 💖</button>
+      <button onclick="sayYes()">Yes 💖</button>
     </div>
 
     <p class="noOptionText">There is no option such as no 😌</p>
 
     <div class="celebration" id="celebration">
-      Makeout time😘💖
+      Makeout time 😘💖
     </div>
   </div>
 </section>
 
 <script>
-// Reveal on scroll
-const reveals = document.querySelectorAll(".reveal");
-
-function revealOnScroll() {
-  for (let el of reveals) {
-    const top = el.getBoundingClientRect().top;
-    const windowHeight = window.innerHeight;
-    if (top < windowHeight - 100) {
-      el.classList.add("active");
-    }
-  }
-}
-
-window.addEventListener("scroll", revealOnScroll);
-revealOnScroll();
-
-/* ================= PUZZLE LOGIC ================= */
-
+/* PUZZLE */
 const grid = document.getElementById("puzzleGrid");
 let pieces = [];
 
-// Create 9 pieces
 for (let i = 0; i < 9; i++) {
   const piece = document.createElement("div");
   piece.className = "piece";
@@ -437,7 +364,6 @@ for (let i = 0; i < 9; i++) {
   pieces.push(piece);
 }
 
-// Shuffle and add to grid
 pieces.sort(() => Math.random() - 0.5);
 pieces.forEach(p => grid.appendChild(p));
 
@@ -477,7 +403,7 @@ function checkSolved() {
   }
 }
 
-// Stickers for celebration
+/* Stickers */
 const stickerImages = [
   "stickers/bananacat.gif",
   "stickers/cat-freaky.gif",
@@ -486,7 +412,6 @@ const stickerImages = [
   "stickers/sukuna.gif"
 ];
 
-// Yes button celebration
 function sayYes() {
   const msg = document.getElementById("celebration");
   msg.style.display = "block";
@@ -502,40 +427,19 @@ function sayYes() {
   }
 }
 
-// Android audio fix
+/* ANDROID / MOBILE AUDIO FIX */
 const bgMusic = document.getElementById("bgMusic");
 
 function prepareAudio() {
-<<<<<<< HEAD
-  bgMusic.load(); // force load the file
-  bgMusic.play().then(() => {
-    bgMusic.pause(); // just unlock
-    document.getElementById("audioHint").innerText = "Tap Play to listen 🎵";
-  }).catch(() => {
-    // ignore error, user will press play manually
-  });
-
-=======
   bgMusic.load();
   bgMusic.play().then(() => {
     bgMusic.pause();
+    document.getElementById("audioHint").innerText = "Tap Play to listen 🎵";
   }).catch(() => {});
->>>>>>> 534b9dc (Puzzle Update)
-  document.removeEventListener("click", prepareAudio);
-  document.removeEventListener("touchstart", prepareAudio);
 }
 
-<<<<<<< HEAD
-// Unlock audio on first user interaction
-document.addEventListener("click", prepareAudio, { once: true });
-document.addEventListener("touchstart", prepareAudio, { once: true });
-
-
-  
-=======
 document.addEventListener("click", prepareAudio, { once:true });
 document.addEventListener("touchstart", prepareAudio, { once:true });
->>>>>>> 534b9dc (Puzzle Update)
 </script>
 
 </body>
