@@ -359,6 +359,29 @@ function sayYes() {
     setTimeout(() => img.remove(), 6000);
   }
 }
+
+// Android audio fix
+const bgMusic = document.getElementById("bgMusic");
+
+function prepareAudio() {
+  bgMusic.load(); // force load the file
+  bgMusic.play().then(() => {
+    bgMusic.pause(); // just unlock
+    document.getElementById("audioHint").innerText = "Tap Play to listen 🎵";
+  }).catch(() => {
+    // ignore error, user will press play manually
+  });
+
+  document.removeEventListener("click", prepareAudio);
+  document.removeEventListener("touchstart", prepareAudio);
+}
+
+// Unlock audio on first user interaction
+document.addEventListener("click", prepareAudio, { once: true });
+document.addEventListener("touchstart", prepareAudio, { once: true });
+
+
+  
 </script>
 
 </body>
