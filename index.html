@@ -1,447 +1,310 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Baby 💖</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<title>For You ❤️</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  scroll-behavior: smooth;
+body{
+  margin:0;
+  font-family:system-ui;
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  color:white;
+  text-align:center;
 }
 
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(180deg, #ffe3ec, #ff8fab);
-  color: #5a0a1a;
-  overflow-x: hidden;
+h1{
+  background:linear-gradient(45deg,gold,white);
+  -webkit-background-clip:text;
+  color:transparent;
+  margin-top:20px;
 }
 
-/* Fullscreen sections */
-section {
-  min-height: 100vh;
-  padding: 70px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.section{ padding:40px 15px; }
+
+button{
+  padding:10px 20px;
+  border-radius:20px;
+  border:none;
+  background:gold;
+  cursor:pointer;
 }
 
-/* Welcome */
-#welcome h1 {
-  font-family: 'Pacifico', cursive;
-  font-size: 3rem;
-  color: #c40032;
-  animation: fadeIn 2s ease;
+/* ================= MUSIC ================= */
+
+.player{
+  display:flex;
+  justify-content:center;
+  gap:10px;
 }
 
-#welcome p {
-  font-size: 1.2rem;
-  margin-top: 20px;
-  color: #7a1a2c;
+/* ================= SLIDESHOW ================= */
+
+.slideshow img,.slideshow video{
+  width:90%;
+  max-width:450px;
+  border-radius:20px;
 }
 
-.scrollHint {
-  margin-top: 50px;
-  font-size: 1rem;
-  color: #7a1a2c;
-  animation: bounce 2s infinite;
+/* ================= GALLERY ================= */
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:12px;
+  max-width:900px;
+  margin:auto;
 }
 
-/* Story */
-.story {
-  max-width: 650px;
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #5a0a1a;
+.gallery img{
+  width:100%;
+  border-radius:12px;
 }
 
-/* Reveal FIX — visible by default */
-.reveal {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 1s ease;
+/* ================= LETTER ================= */
+
+.letter{
+  max-width:500px;
+  margin:auto;
+  padding:20px;
+  background:rgba(255,255,255,.08);
+  border-radius:15px;
 }
 
-/* Our Memories */
-.memories {
-  width: 100%;
-  max-width: 1000px;
+/* ================= PUZZLE ================= */
+
+#puzzle{
+  width:300px;
+  height:300px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
+  gap:3px;
 }
 
-.memories h2 {
-  font-family: 'Pacifico', cursive;
-  font-size: 2.3rem;
-  color: #c40032;
-  margin-bottom: 30px;
+.tile{
+  background-image:url("photos/puzzle.png");
+  background-repeat:no-repeat;
+  width:100%;
+  height:100%;
+  cursor:pointer;
+  border-radius:6px;
 }
 
-.memoryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 16px;
-}
+/* ================= STAR GAME ================= */
 
-.memoryGrid img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 18px;
-  box-shadow: 0 6px 20px rgba(196,0,50,0.3);
-  transition: transform 0.3s ease;
-}
-
-.memoryGrid img:hover {
-  transform: scale(1.08);
-}
-
-/* Music */
-.musicBox audio {
-  width: 100%;
-  max-width: 350px;
-  margin-top: 15px;
-  outline: none;
-}
-
-/* Puzzle */
-.puzzleBox h2 {
-  font-family: 'Pacifico', cursive;
-  font-size: 2.3rem;
-  color: #c40032;
-  margin-bottom: 20px;
-}
-
-.puzzleHint {
-  font-size: 1rem;
-  color: #7a1a2c;
-  margin-bottom: 20px;
-}
-
-.puzzleGrid {
-  width: 300px;
-  height: 300px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 2px;
-  margin-bottom: 20px;
-}
-
-.piece {
-  width: 100%;
-  height: 100%;
-  background-image: url("photos/puzzle.jpg");
-  background-size: 300% 300%;
-  border-radius: 8px;
-  cursor: grab;
-}
-
-.puzzleComplete {
-  display: none;
-  font-family: 'Pacifico', cursive;
-  font-size: 1.5rem;
-  color: #c40032;
-  margin-top: 20px;
-}
-
-.continueBtn {
-  margin-top: 20px;
-  padding: 12px 30px;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 30px;
-  background: #ff4d6d;
-  color: white;
-  cursor: pointer;
-  display: none;
-}
-
-/* Final */
-.final {
-  font-family: 'Pacifico', cursive;
-  font-size: 2.2rem;
-  color: #c40032;
-  animation: glow 3s infinite;
-  line-height: 1.5;
-}
-
-/* Valentine */
-.valentineBox h2 {
-  font-family: 'Pacifico', cursive;
-  font-size: 2.5rem;
-  color: #c40032;
-  margin-bottom: 20px;
-}
-
-.valentineBtns {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-.valentineBtns button {
-  padding: 14px 36px;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: 600;
-  background: #ff4d6d;
-  color: white;
-}
-
-.noOptionText {
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #7a1a2c;
-  font-style: italic;
-}
-
-.celebration {
-  margin-top: 30px;
-  font-size: 1.6rem;
-  color: #c40032;
-  display: none;
-  font-family: 'Pacifico', cursive;
-}
-
-/* Stickers */
-.sticker {
-  position: fixed;
-  bottom: -100px;
-  width: 60px;
-  height: 60px;
-  animation: floatUp 6s linear forwards;
-  pointer-events: none;
-}
-
-@keyframes floatUp {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-120vh); opacity: 0; }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes bounce {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
-}
-
-@keyframes glow {
-  0% { text-shadow: 0 0 5px rgba(255,182,193,0.6); }
-  50% { text-shadow: 0 0 25px rgba(255,105,135,1); }
-  100% { text-shadow: 0 0 5px rgba(255,182,193,0.6); }
+.star{
+  position:fixed;
+  font-size:24px;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<!-- WELCOME -->
-<section id="welcome">
-  <h1>Hi Baby 💖</h1>
-  <p>This is something I wanted to make… just for us.</p>
-  <div class="scrollHint">⬇️ Scroll slowly ⬇️</div>
-</section>
+<h1>For You ✨</h1>
 
-<!-- STORY 1 -->
-<section class="reveal">
-  <div class="story">
-    <p>Every memory with you is something I quietly keep with me.</p>
-    <p>The little moments, the random laughs, the days that felt simple but special.</p>
-  </div>
-</section>
+<!-- MUSIC PLAYER -->
+<div class="section player">
+  <button onclick="prevSong()">⏮</button>
+  <button onclick="toggleMusic()">▶ / ⏸</button>
+  <button onclick="nextSong()">⏭</button>
+</div>
+<audio id="song"></audio>
 
-<!-- STORY 2 -->
-<section class="reveal">
-  <div class="story">
-    <p>I don’t know where life takes us, but I know one thing for sure…</p>
-    <p>I’m really glad you’re a part of my story.</p>
-  </div>
-</section>
+<!-- SLIDESHOW -->
+<div class="section slideshow" id="slideshow"></div>
 
-<!-- MEMORIES -->
-<section class="reveal">
-  <div class="memories">
-    <h2>Our Memories 📸</h2>
-    <div class="memoryGrid">
-      <img src="photos/mem1.jpeg">
-      <img src="photos/mem2.png">
-      <img src="photos/mem3.jpeg">
-      <img src="photos/mem4.jpeg">
-      <img src="photos/mem5.jpeg">
-      <img src="photos/mem6.jpeg">
-      <img src="photos/mem7.jpeg">
-      <img src="photos/mem8.jpeg">
-      <img src="photos/mem9.jpeg">
-      <img src="photos/mem10.jpeg">
-    </div>
-  </div>
-</section>
+<!-- GALLERY -->
+<div class="section">
+<h2>📸</h2>
+<div id="gallery" class="gallery"></div>
+</div>
 
-<!-- MUSIC -->
-<section class="reveal">
-  <h2>This song reminds me of you 🎵</h2>
-  <p id="audioHint">Tap anywhere once, then press Play 🎶</p>
-
-  <div class="musicBox">
-    <audio id="bgMusic" controls loop preload="auto">
-      <source src="music/Taylor Swift - Call It What You Want (Lyric Video).mp3" type="audio/mpeg">
-    </audio>
-  </div>
-</section>
+<!-- LETTER -->
+<div class="section">
+<div id="letter" class="letter"></div>
+</div>
 
 <!-- PUZZLE -->
-<section class="reveal">
-  <div class="puzzleBox">
-    <h2>Solve this puzzle 💖</h2>
-    <p class="puzzleHint">Complete it to see something special…</p>
+<div class="section">
+<h2>Solve The Puzzle 🧩</h2>
+<div id="puzzle"></div>
+<button onclick="shufflePuzzle()">Shuffle</button>
+</div>
 
-    <div class="puzzleGrid" id="puzzleGrid"></div>
-
-    <div class="puzzleComplete" id="puzzleComplete">
-      This is us… and I want this forever 💖
-    </div>
-
-    <button class="continueBtn" id="continueBtn" onclick="document.getElementById('finalSection').scrollIntoView({behavior:'smooth'})">
-      Continue 💌
-    </button>
-  </div>
-</section>
-
-<!-- FINAL -->
-<section class="reveal" id="finalSection">
-  <div class="final">
-    Baby…  
-    <br><br>
-    Thank you for being a part of my life.  
-    <br><br>
-    Always yours ❤️
-  </div>
-</section>
-
-<!-- VALENTINE -->
-<section class="reveal">
-  <div class="valentineBox">
-    <h2>Will you be my Valentine once again…? 💌</h2>
-
-    <div class="valentineBtns">
-      <button onclick="sayYes()">Yes 💖</button>
-    </div>
-
-    <p class="noOptionText">There is no option such as no 😌</p>
-
-    <div class="celebration" id="celebration">
-      Makeout time 😘💖
-    </div>
-  </div>
-</section>
+<!-- STAR GAME -->
+<div class="section">
+Score: <span id="score">0</span>
+</div>
 
 <script>
-/* PUZZLE */
-const grid = document.getElementById("puzzleGrid");
-let pieces = [];
+/* ================= MUSIC ================= */
 
-for (let i = 0; i < 9; i++) {
-  const piece = document.createElement("div");
-  piece.className = "piece";
-  piece.draggable = true;
+const songs=["music/song1.mp3","music/song2.mp3"];
+let currentSong=0;
+const audio=document.getElementById("song");
 
-  const x = i % 3;
-  const y = Math.floor(i / 3);
+function loadSong(){ audio.src=songs[currentSong]; }
+loadSong();
 
-  piece.style.backgroundPosition = `${x * 50}% ${y * 50}%`;
-  piece.dataset.correct = i;
+function toggleMusic(){ audio.paused?audio.play():audio.pause(); }
+function nextSong(){ currentSong=(currentSong+1)%songs.length; loadSong(); audio.play(); }
+function prevSong(){ currentSong=(currentSong-1+songs.length)%songs.length; loadSong(); audio.play(); }
 
-  pieces.push(piece);
-}
+/* ================= SLIDESHOW ================= */
 
-pieces.sort(() => Math.random() - 0.5);
-pieces.forEach(p => grid.appendChild(p));
+const slideshow=document.getElementById("slideshow");
 
-let dragged = null;
-
-grid.addEventListener("dragstart", e => {
-  if (e.target.classList.contains("piece")) dragged = e.target;
-});
-
-grid.addEventListener("dragover", e => e.preventDefault());
-
-grid.addEventListener("drop", e => {
-  if (e.target.classList.contains("piece")) {
-    const tempPos = dragged.style.backgroundPosition;
-    dragged.style.backgroundPosition = e.target.style.backgroundPosition;
-    e.target.style.backgroundPosition = tempPos;
-
-    const tempData = dragged.dataset.correct;
-    dragged.dataset.correct = e.target.dataset.correct;
-    e.target.dataset.correct = tempData;
-
-    checkSolved();
-  }
-});
-
-function checkSolved() {
-  const all = document.querySelectorAll(".piece");
-  let correct = true;
-
-  all.forEach((p, i) => {
-    if (parseInt(p.dataset.correct) !== i) correct = false;
-  });
-
-  if (correct) {
-    document.getElementById("puzzleComplete").style.display = "block";
-    document.getElementById("continueBtn").style.display = "inline-block";
-  }
-}
-
-/* Stickers */
-const stickerImages = [
-  "stickers/bananacat.gif",
-  "stickers/cat-freaky.gif",
-  "stickers/do-dodo.gif",
-  "stickers/lick.gif",
-  "stickers/sukuna.gif"
+const media=[
+ "photos/sana1.png",
+ "photos/sana2.png",
+ "videos/vid.mp4",
+ "photos/sana3.png"
 ];
 
-function sayYes() {
-  const msg = document.getElementById("celebration");
-  msg.style.display = "block";
+let m=0;
 
-  for (let i = 0; i < 25; i++) {
-    const img = document.createElement("img");
-    img.className = "sticker";
-    img.src = stickerImages[Math.floor(Math.random() * stickerImages.length)];
-    img.style.left = Math.random() * 100 + "vw";
-    img.style.animationDuration = (4 + Math.random() * 4) + "s";
-    document.body.appendChild(img);
-    setTimeout(() => img.remove(), 6000);
-  }
+function showMedia(){
+ slideshow.innerHTML="";
+ const f=media[m];
+
+ if(f.endsWith(".mp4")){
+  const v=document.createElement("video");
+  v.src=f; v.autoplay=true; v.loop=true; v.muted=true;
+  slideshow.appendChild(v);
+ }else{
+  const img=document.createElement("img");
+  img.src=f;
+  slideshow.appendChild(img);
+ }
+
+ m=(m+1)%media.length;
+}
+showMedia();
+setInterval(showMedia,3000);
+
+/* ================= GALLERY ================= */
+
+const gallery=document.getElementById("gallery");
+
+[
+ "photos/sana1.png",
+ "photos/sana2.png",
+ "photos/sana3.png",
+ "photos/sana4.png",
+ "photos/sana5.png",
+ "photos/sana6.png"
+].forEach(src=>{
+ const img=document.createElement("img");
+ img.src=src;
+ gallery.appendChild(img);
+});
+
+/* ================= LETTER ================= */
+
+const msg="Oyeee  Chamak  Challo";
+let i=0;
+
+setInterval(()=>{
+ if(i<msg.length) letter.innerText+=msg[i++];
+},25);
+
+/* ================= STAR GAME ================= */
+
+let score=0;
+
+setInterval(()=>{
+ const star=document.createElement("div");
+ star.className="star";
+ star.innerText="⭐";
+ star.style.left=Math.random()*95+"%";
+ star.style.top="0";
+
+ star.onclick=()=>{
+  score++;
+  document.getElementById("score").innerText=score;
+  star.remove();
+ };
+
+ document.body.appendChild(star);
+
+ let y=0;
+ const fall=setInterval(()=>{
+  y+=5;
+  star.style.top=y+"px";
+  if(y>700){star.remove();clearInterval(fall);}
+ },20);
+
+},1200);
+
+/* ================= PERFECT 3×3 PUZZLE ================= */
+
+const puzzle=document.getElementById("puzzle");
+const size=3;
+const pieceSize=100;
+
+let order=[...Array(size*size).keys()];
+
+function renderPuzzle(){
+ puzzle.innerHTML="";
+
+ order.forEach(n=>{
+  const tile=document.createElement("div");
+  tile.className="tile";
+
+  const x=(n%size)*pieceSize;
+  const y=Math.floor(n/size)*pieceSize;
+
+  tile.style.backgroundPosition=`-${x}px -${y}px`;
+  tile.style.backgroundSize=`${pieceSize*size}px ${pieceSize*size}px`;
+
+  puzzle.appendChild(tile);
+ });
 }
 
-/* ANDROID / MOBILE AUDIO FIX */
-const bgMusic = document.getElementById("bgMusic");
-
-function prepareAudio() {
-  bgMusic.load();
-  bgMusic.play().then(() => {
-    bgMusic.pause();
-    document.getElementById("audioHint").innerText = "Tap Play to listen 🎵";
-  }).catch(() => {});
+function shufflePuzzle(){
+ order.sort(()=>Math.random()-0.5);
+ renderPuzzle();
 }
 
-document.addEventListener("click", prepareAudio, { once:true });
-document.addEventListener("touchstart", prepareAudio, { once:true });
+let first=null;
+
+puzzle.addEventListener("click",e=>{
+ if(!e.target.classList.contains("tile")) return;
+
+ if(!first){
+  first=e.target;
+  first.style.opacity="0.5";
+ }else{
+  const temp=first.style.backgroundPosition;
+  first.style.backgroundPosition=e.target.style.backgroundPosition;
+  e.target.style.backgroundPosition=temp;
+
+  first.style.opacity="1";
+  first=null;
+
+  checkWin();
+ }
+});
+
+function checkWin(){
+ const tiles=[...document.querySelectorAll(".tile")];
+ let correct=true;
+
+ tiles.forEach((t,i)=>{
+  const x=(i%size)*pieceSize;
+  const y=Math.floor(i/size)*pieceSize;
+  if(t.style.backgroundPosition!==`-${x}px -${y}px`) correct=false;
+ });
+
+ if(correct) setTimeout(()=>alert("Puzzle solved ❤️"),150);
+}
+
+shufflePuzzle();
 </script>
-  
 
 </body>
 </html>
