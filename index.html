@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For You ❤️</title>
+<title>Happy Birthday Twin</title>
 
 <style>
 body{
@@ -30,24 +30,21 @@ button{
   cursor:pointer;
 }
 
-/* ================= MUSIC ================= */
-
+/* MUSIC */
 .player{
   display:flex;
   justify-content:center;
   gap:10px;
 }
 
-/* ================= SLIDESHOW ================= */
-
-.slideshow img,.slideshow video{
+/* SLIDESHOW */
+.slideshow img{
   width:90%;
   max-width:450px;
   border-radius:20px;
 }
 
-/* ================= GALLERY ================= */
-
+/* GALLERY */
 .gallery{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
@@ -59,52 +56,44 @@ button{
 .gallery img{
   width:100%;
   border-radius:12px;
+  transition:0.3s;
 }
 
-/* ================= LETTER ================= */
-
-.letter{
-  max-width:500px;
-  margin:auto;
-  padding:20px;
-  background:rgba(255,255,255,.08);
-  border-radius:15px;
+.gallery img:hover{
+  transform:scale(1.05);
 }
 
-/* ================= PUZZLE ================= */
-
-#puzzle{
-  width:300px;
-  height:300px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(3,1fr);
-  gap:3px;
+/* ⭐ GAME */
+#scoreBox{
+  position:fixed;
+  top:10px;
+  right:15px;
+  font-size:18px;
+  background:rgba(0,0,0,0.4);
+  padding:8px 12px;
+  border-radius:12px;
 }
-
-.tile{
-  background-image:url("photos/puzzle.png");
-  background-repeat:no-repeat;
-  width:100%;
-  height:100%;
-  cursor:pointer;
-  border-radius:6px;
-}
-
-/* ================= STAR GAME ================= */
 
 .star{
   position:fixed;
-  font-size:24px;
+  font-size:26px;
   cursor:pointer;
+  animation:fall linear;
+}
+
+@keyframes fall{
+  from{ transform:translateY(-50px); }
+  to{ transform:translateY(100vh); }
 }
 </style>
 </head>
 
 <body>
 
-<h1>For You ✨</h1>
+<h1>Happy Birthday Twin ✨</h1>
+
+<!-- SCORE -->
+<div id="scoreBox">⭐ 0</div>
 
 <!-- MUSIC PLAYER -->
 <div class="section player">
@@ -119,31 +108,18 @@ button{
 
 <!-- GALLERY -->
 <div class="section">
-<h2>📸</h2>
 <div id="gallery" class="gallery"></div>
 </div>
 
-<!-- LETTER -->
-<div class="section">
-<div id="letter" class="letter"></div>
-</div>
-
-<!-- PUZZLE -->
-<div class="section">
-<h2>Solve The Puzzle 🧩</h2>
-<div id="puzzle"></div>
-<button onclick="shufflePuzzle()">Shuffle</button>
-</div>
-
-<!-- STAR GAME -->
-<div class="section">
-Score: <span id="score">0</span>
-</div>
-
 <script>
+
 /* ================= MUSIC ================= */
 
-const songs=["music/song1.mp3","music/song2.mp3"];
+const songs=[
+ "music/song1.mp3",
+ "music/song2.mp3"
+];
+
 let currentSong=0;
 const audio=document.getElementById("song");
 
@@ -151,159 +127,93 @@ function loadSong(){ audio.src=songs[currentSong]; }
 loadSong();
 
 function toggleMusic(){ audio.paused?audio.play():audio.pause(); }
-function nextSong(){ currentSong=(currentSong+1)%songs.length; loadSong(); audio.play(); }
-function prevSong(){ currentSong=(currentSong-1+songs.length)%songs.length; loadSong(); audio.play(); }
+function nextSong(){
+ currentSong=(currentSong+1)%songs.length;
+ loadSong();
+ audio.play();
+}
+function prevSong(){
+ currentSong=(currentSong-1+songs.length)%songs.length;
+ loadSong();
+ audio.play();
+}
 
 /* ================= SLIDESHOW ================= */
 
 const slideshow=document.getElementById("slideshow");
 
-const media=[
- "photos/sana1.png",
- "photos/sana2.png",
- "videos/vid.mp4",
- "photos/sana3.png"
+const images=[
+ "photos/sri1.png",
+ "photos/sri2.png",
+ "photos/sri3.png",
+ "photos/sri4.png",
+ "photos/sri5.png",
+ "photos/sri6.png"
 ];
 
-let m=0;
+let i=0;
 
-function showMedia(){
+function showSlide(){
  slideshow.innerHTML="";
- const f=media[m];
+ const img=document.createElement("img");
+ img.src=images[i];
+ slideshow.appendChild(img);
 
- if(f.endsWith(".mp4")){
-  const v=document.createElement("video");
-  v.src=f; v.autoplay=true; v.loop=true; v.muted=true;
-  slideshow.appendChild(v);
- }else{
-  const img=document.createElement("img");
-  img.src=f;
-  slideshow.appendChild(img);
- }
-
- m=(m+1)%media.length;
+ i=(i+1)%images.length;
 }
-showMedia();
-setInterval(showMedia,3000);
+
+showSlide();
+setInterval(showSlide,3000);
 
 /* ================= GALLERY ================= */
 
 const gallery=document.getElementById("gallery");
 
 [
- "photos/sana1.png",
- "photos/sana2.png",
- "photos/sana3.png",
- "photos/sana4.png",
- "photos/sana5.png",
- "photos/sana6.png"
+ "photos/sri1.png",
+ "photos/sri2.png",
+ "photos/sri3.png",
+ "photos/sri4.png",
+ "photos/sri5.png",
+ "photos/sri6.png"
 ].forEach(src=>{
  const img=document.createElement("img");
  img.src=src;
  gallery.appendChild(img);
 });
 
-/* ================= LETTER ================= */
+/* ================= CLICKING GAME ================= */
 
-const msg="Oyeee  Chamak  Challo";
-let i=0;
+let score = 0;
+const scoreBox = document.getElementById("scoreBox");
 
-setInterval(()=>{
- if(i<msg.length) letter.innerText+=msg[i++];
-},25);
+function spawnStar(){
+  const star = document.createElement("div");
+  star.className = "star";
+  star.innerText = "⭐";
 
-/* ================= STAR GAME ================= */
+  star.style.left = Math.random()*90 + "vw";
+  star.style.animationDuration = (3 + Math.random()*2) + "s";
 
-let score=0;
+  star.onclick = () => {
+    score++;
+    scoreBox.innerText = "⭐ " + score;
 
-setInterval(()=>{
- const star=document.createElement("div");
- star.className="star";
- star.innerText="⭐";
- star.style.left=Math.random()*95+"%";
- star.style.top="0";
+    // cute pop effect
+    star.style.transform = "scale(1.5)";
+    star.style.opacity = "0";
 
- star.onclick=()=>{
-  score++;
-  document.getElementById("score").innerText=score;
-  star.remove();
- };
+    setTimeout(()=>star.remove(),200);
+  };
 
- document.body.appendChild(star);
+  document.body.appendChild(star);
 
- let y=0;
- const fall=setInterval(()=>{
-  y+=5;
-  star.style.top=y+"px";
-  if(y>700){star.remove();clearInterval(fall);}
- },20);
-
-},1200);
-
-/* ================= PERFECT 3×3 PUZZLE ================= */
-
-const puzzle=document.getElementById("puzzle");
-const size=3;
-const pieceSize=100;
-
-let order=[...Array(size*size).keys()];
-
-function renderPuzzle(){
- puzzle.innerHTML="";
-
- order.forEach(n=>{
-  const tile=document.createElement("div");
-  tile.className="tile";
-
-  const x=(n%size)*pieceSize;
-  const y=Math.floor(n/size)*pieceSize;
-
-  tile.style.backgroundPosition=`-${x}px -${y}px`;
-  tile.style.backgroundSize=`${pieceSize*size}px ${pieceSize*size}px`;
-
-  puzzle.appendChild(tile);
- });
+  setTimeout(()=>star.remove(),5000);
 }
 
-function shufflePuzzle(){
- order.sort(()=>Math.random()-0.5);
- renderPuzzle();
-}
+// spawn stars continuously
+setInterval(spawnStar, 900);
 
-let first=null;
-
-puzzle.addEventListener("click",e=>{
- if(!e.target.classList.contains("tile")) return;
-
- if(!first){
-  first=e.target;
-  first.style.opacity="0.5";
- }else{
-  const temp=first.style.backgroundPosition;
-  first.style.backgroundPosition=e.target.style.backgroundPosition;
-  e.target.style.backgroundPosition=temp;
-
-  first.style.opacity="1";
-  first=null;
-
-  checkWin();
- }
-});
-
-function checkWin(){
- const tiles=[...document.querySelectorAll(".tile")];
- let correct=true;
-
- tiles.forEach((t,i)=>{
-  const x=(i%size)*pieceSize;
-  const y=Math.floor(i/size)*pieceSize;
-  if(t.style.backgroundPosition!==`-${x}px -${y}px`) correct=false;
- });
-
- if(correct) setTimeout(()=>alert("Puzzle solved ❤️"),150);
-}
-
-shufflePuzzle();
 </script>
 
 </body>
