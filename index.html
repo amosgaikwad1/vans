@@ -63,7 +63,7 @@ button{
   transform:scale(1.05);
 }
 
-/* ⭐ GAME */
+/* SCORE */
 #scoreBox{
   position:fixed;
   top:10px;
@@ -72,18 +72,23 @@ button{
   background:rgba(0,0,0,0.4);
   padding:8px 12px;
   border-radius:12px;
+  z-index:9999;
 }
 
-.star{
+/* STICKERS */
+.sticker{
   position:fixed;
-  font-size:26px;
+  top:0;
+  width:50px;
+  height:50px;
   cursor:pointer;
   animation:fall linear;
+  z-index:9999;
 }
 
 @keyframes fall{
-  from{ transform:translateY(-50px); }
-  to{ transform:translateY(100vh); }
+  from{ transform:translateY(0); }
+  to{ transform:translateY(110vh); }
 }
 </style>
 </head>
@@ -182,37 +187,68 @@ const gallery=document.getElementById("gallery");
  gallery.appendChild(img);
 });
 
-/* ================= CLICKING GAME ================= */
+/* ================= STICKER GAME ================= */
 
 let score = 0;
 const scoreBox = document.getElementById("scoreBox");
 
-function spawnStar(){
-  const star = document.createElement("div");
-  star.className = "star";
-  star.innerText = "⭐";
+// your GIF stickers
+const stickers = [
+  "stickers/bananacat.gif",
+  "stickers/cat-freaky.gif",
+  "stickers/do-dodo.gif",
+  "stickers/hampter.gif",
+  "stickers/lick.gif",
+  "stickers/pray.gif",
+  "stickers/suscat.gif",
+  
+  "stickers/suscat.gif",
+];
 
-  star.style.left = Math.random()*90 + "vw";
-  star.style.animationDuration = (3 + Math.random()*2) + "s";
+// fallback emojis
+const emojis = ["⭐","✨","💖","🌸"];
 
-  star.onclick = () => {
+function spawnSticker(){
+
+  let el;
+
+  if(Math.random() > 0.4){
+    el = document.createElement("img");
+    el.src = stickers[Math.floor(Math.random()*stickers.length)];
+  } else {
+    el = document.createElement("div");
+    el.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.fontSize = "30px";
+  }
+
+  el.className = "sticker";
+
+  el.style.left = Math.random() * (window.innerWidth - 60) + "px";
+  el.style.animationDuration = (3 + Math.random()*2) + "s";
+
+  el.onclick = () => {
     score++;
     scoreBox.innerText = "⭐ " + score;
 
-    // cute pop effect
-    star.style.transform = "scale(1.5)";
-    star.style.opacity = "0";
+    // pop effect
+    el.style.transform = "scale(1.5)";
+    el.style.opacity = "0";
 
-    setTimeout(()=>star.remove(),200);
+    // WIN MESSAGE
+    if(score === 20){
+      setTimeout(()=>{
+        alert("oogaa booga");
+      },200);
+    }
+
+    setTimeout(()=>el.remove(),200);
   };
 
-  document.body.appendChild(star);
-
-  setTimeout(()=>star.remove(),5000);
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),5000);
 }
 
-// spawn stars continuously
-setInterval(spawnStar, 900);
+setInterval(spawnSticker, 900);
 
 </script>
 
